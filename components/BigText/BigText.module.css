@@ -1,0 +1,15 @@
+.bigtext {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 5em;
+    cursor: pointer;
+    user-select: none;
+    line-height: 130%;
+}
+@media screen and (max-width: 768px) {
+    .bigtext {
+        font-size: 2rem;
+        letter-spacing: -1.5px;
+    }
+}
