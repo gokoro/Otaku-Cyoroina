@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import useSWR from 'swr'
 
 import Head from 'next/head'
 
@@ -8,13 +7,14 @@ import BigText from '../components/BigText/BigText'
 import ClickListner from '../components/ClickListener/ClickListener'
 import Footer from '../components/Footer/Footer'
 
-const Index = () => {
+const jsonUrl = 'https://gist.githubusercontent.com/gokoro/f9336a996fa52ab667da52a75873b2ca/raw/fce929a3be32c2afe9eb51e5cdacfd357a851582/otaku.json'
+
+const Index = ({ data }) => {
     const handleClick = () => {
         const oneArr = getOneFromArray(data)
         setArticle(oneArr.article)
         setAuthor(oneArr.author)
     }
-    const { data } = useSWR('/otaku.json', fetcher)
     const [ currentArticle, setArticle ] = useState('클릭하여 시작하세요!')
     const [ currentAuthor, setAuthor ] = useState('someone')
     return (
@@ -29,8 +29,6 @@ const Index = () => {
             <Section name="top">
                 <ClickListner exFn={handleClick}>
                     <BigText article={
-                        !data ?
-                        <div>Loading...</div> :
                         <>
                             {currentArticle}
                             <div style={{"fontSize": "20px"}}>Written by {currentAuthor}</div>
@@ -42,7 +40,17 @@ const Index = () => {
         </>
     )
 }
-const fetcher = url => fetch(url).then(res => res.json())
 const getOneFromArray = arr => arr[Math.floor(Math.random() * arr.length)]
+
+export async function getStaticProps() {
+    const response = await fetch(jsonUrl)
+    const data = await response.json()
+
+    return {
+        props: {
+            data
+        }
+    }
+}
 
 export default Index  
