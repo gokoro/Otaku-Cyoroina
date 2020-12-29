@@ -7,7 +7,7 @@ import BigText from '../components/BigText/BigText'
 import ClickListner from '../components/ClickListener/ClickListener'
 import Footer from '../components/Footer/Footer'
 
-const jsonUrl = 'https://gist.githubusercontent.com/gokoro/f9336a996fa52ab667da52a75873b2ca/raw/fce929a3be32c2afe9eb51e5cdacfd357a851582/otaku.json'
+import otaku from '../public/otaku.json'
 
 const Index = ({ data }) => {
     const handleClick = () => {
@@ -43,12 +43,9 @@ const Index = ({ data }) => {
 const getOneFromArray = arr => arr[Math.floor(Math.random() * arr.length)]
 
 export async function getStaticProps() {
-    const response = await fetch(jsonUrl)
-    const data = await response.json()
-
     return {
         props: {
-            data
+            data: otaku
         }
     }
 }
